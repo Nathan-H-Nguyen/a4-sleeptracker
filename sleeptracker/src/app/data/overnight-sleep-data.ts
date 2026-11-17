@@ -1,4 +1,5 @@
 import { SleepData } from './sleep-data';
+import { OvernightRecord } from './sleep-record';
 
 export class OvernightSleepData extends SleepData {
 	readonly sleepStart:Date;
@@ -58,4 +59,25 @@ export class OvernightSleepData extends SleepData {
 	override dateString():string {
 		return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
+
+  override toJSON(): OvernightRecord {
+    return {
+      type: 'overnight',
+      id: this.id,
+      loggedAt: this.loggedAt.toISOString(),
+      sleepStart: this.sleepStart.toISOString(),
+      sleepEnd: this.sleepEnd.toISOString(),
+      sleepQuality: this.sleepQuality
+    };
+  }
+
+  static fromJSON(overnightRecord: OvernightRecord): OvernightSleepData {
+    return new OvernightSleepData(
+      new Date(overnightRecord.sleepStart),
+      new Date(overnightRecord.sleepEnd),
+      overnightRecord.sleepQuality,
+      overnightRecord.id,
+      new Date(overnightRecord.loggedAt)
+    );
+  }
 }

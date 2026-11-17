@@ -2,6 +2,7 @@
 /* https://web.stanford.edu/~dement/sss.html */
 
 import { SleepData } from './sleep-data';
+import { StanfordSleepinessRecord } from './sleep-record';
 
 export class StanfordSleepinessData extends SleepData {
 	public static ScaleValues = [undefined,//Sleepiness scale starts at 1
@@ -28,7 +29,25 @@ export class StanfordSleepinessData extends SleepData {
   get description() {
     return StanfordSleepinessData.ScaleValues[this.loggedValue] ?? "";
   }
+
 	override summaryString():string {
 		return this.loggedValue + ": " + this.description;
 	}
+
+  override toJSON(): StanfordSleepinessRecord {
+    return {
+      type: 'sleepiness',
+      id: this.id,
+      loggedAt: this.loggedAt.toISOString(),
+      loggedValue: this.loggedValue
+    };
+  }
+
+  static fromJSON(stanfordSleepinessRecord: StanfordSleepinessRecord): StanfordSleepinessData {
+    return new StanfordSleepinessData(
+      stanfordSleepinessRecord.loggedValue,
+      new Date(stanfordSleepinessRecord.loggedAt),
+      stanfordSleepinessRecord.id
+    );
+  }
 }

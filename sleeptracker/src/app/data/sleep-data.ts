@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
+import { SleepRecord } from './sleep-record';
 
-export class SleepData {
+export abstract class SleepData {
 	readonly id:string;
 	readonly loggedAt:Date;
 
@@ -17,4 +18,6 @@ export class SleepData {
 	dateString():string {
 		return this.loggedAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
+
+  abstract toJSON(): SleepRecord;
 }
