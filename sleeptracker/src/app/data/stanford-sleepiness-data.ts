@@ -13,15 +13,22 @@ export class StanfordSleepinessData extends SleepData {
 	'Sleepy, woozy, fighting sleep; prefer to lie down', //6
 	'No longer fighting sleep, sleep onset soon; having dream-like thoughts']; //7
 
-	private loggedValue:number;
+	readonly loggedValue:number;
 
-	constructor(loggedValue:number, loggedAt:Date = new Date()) {
-		super();
+	constructor(loggedValue:number, loggedAt?: Date, id?: string) {
+		super(id, loggedAt);
+
+    if (!Number.isInteger(loggedValue) || loggedValue < 1 || loggedValue > 7) {
+      throw new RangeError("Logged value must be an integer between 1 and 7")
+    }
+
 		this.loggedValue = loggedValue;
-		this.loggedAt = loggedAt;
 	}
 
+  get description() {
+    return StanfordSleepinessData.ScaleValues[this.loggedValue] ?? "";
+  }
 	override summaryString():string {
-		return this.loggedValue + ": " + StanfordSleepinessData.ScaleValues[this.loggedValue];
+		return this.loggedValue + ": " + this.description;
 	}
 }
