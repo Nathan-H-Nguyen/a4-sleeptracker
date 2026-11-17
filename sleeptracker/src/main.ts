@@ -18,8 +18,7 @@ bootstrapApplication(AppComponent, {
       name: "sleepstorage",
       driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage],
     })),
-    provideAppInitializer(() => {
-      inject(AppStorageService).init();
-    }),
+    provideAppInitializer(() =>
+      inject(AppStorageService).init()),
   ],
 });
