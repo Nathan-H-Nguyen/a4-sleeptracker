@@ -1,22 +1,56 @@
 import { SleepData } from './sleep-data';
 
 export class OvernightSleepData extends SleepData {
-	private sleepStart:Date;
-	private sleepEnd:Date;
+	readonly sleepStart:Date;
+	readonly sleepEnd:Date;
+  readonly sleepQuality: number; // Rating 1-5
 
-	constructor(sleepStart:Date, sleepEnd:Date) {
-		super();
+	constructor(sleepStart:Date, sleepEnd:Date, sleepQuality: number, id?: string, loggedAt?: Date) {
+		super(id, loggedAt);
+
+    if (Number.isNaN(sleepStart.getTime()) || Number.isNaN(sleepEnd.getTime())) {
+      throw new RangeError("Invalid date");
+    }
+    if (sleepEnd <= sleepStart) {
+      throw new RangeError("Sleep end time must be after sleep start time");
+    }
+    if (!Number.isInteger(sleepQuality) || (sleepQuality < 1 || sleepQuality > 5)) {
+      throw new RangeError("Sleep quality must be an integer between 1 and 5");
+    }
+
 		this.sleepStart = sleepStart;
 		this.sleepEnd = sleepEnd;
+		this.sleepQuality = sleepQuality;
 	}
 
-	override summaryString():string {
-		var sleepStart_ms = this.sleepStart.getTime();
-		var sleepEnd_ms = this.sleepEnd.getTime();
+  get durationMs(): number {
+    return this.sleepEnd.getTime() - this.sleepStart.getTime();
+  }
 
-		// Calculate the difference in milliseconds
-		var difference_ms = sleepEnd_ms - sleepStart_ms;
-		    
+  get durationHours(): number {
+    return this.durationMs / (1000 * 60 * 60);
+  }
+
+  get qualityLabel(): string {
+    switch(this.sleepQuality) {
+      case 1:
+        return "Poor";
+      case 2:
+        return "Fair";
+      case 3:
+        return "Good";
+      case 4:
+        return "Restful";
+      case 5:
+        return "Excellent";
+      default:
+        return "Unknown";
+    }
+  }
+
+	override summaryString():string {
+		var difference_ms = this.durationMs;
+
 		// Convert to hours and minutes
 		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes.";
 	}
