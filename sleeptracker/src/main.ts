@@ -4,11 +4,22 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { Drivers } from '@ionic/storage';
+import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
+import { AppStorageService } from './app/services/app-storage.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    importProvidersFrom(IonicStorageModule.forRoot({
+      name: "sleepstorage",
+      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage],
+    })),
+    provideAppInitializer(() => {
+      inject(AppStorageService).init();
+    }),
   ],
 });
