@@ -3,6 +3,7 @@ import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { SleepRecord } from '../data/sleep-record';
 import { AppStorageService } from './app-storage.service';
+import { resolveSleepTimes } from '../data/sleep-time-utils';
 
 const STORAGE_KEY = 'sleep_data.v1';
 
@@ -33,13 +34,13 @@ export class SleepService {
       records = await this.appStorage.get(STORAGE_KEY);
     } catch (error) {
       console.error('Error fetching sleep data from storage: ', error);
-      ({ overnight: this.AllOvernightData, sleepiness: this.AllSleepinessData } = this.createDefaultData());
+      ({ overnightSleepData: this.AllOvernightData, sleepinessData: this.AllSleepinessData } = this.createDefaultData());
       return;
     }
 
     // If no backed-up / logged data, load default data
     if (!Array.isArray(records)) {
-      ({ overnight: this.AllOvernightData, sleepiness: this.AllSleepinessData } = this.createDefaultData());
+      ({ overnightSleepData: this.AllOvernightData, sleepinessData: this.AllSleepinessData } = this.createDefaultData());
       await this.persist(); // Persist the default data to storage
       return;
     }
@@ -64,48 +65,77 @@ export class SleepService {
   }
 
 	private createDefaultData() {
-    // Wake time was yesterday at 9:03am, this counts as overnight sleep for the day before yesterday, the Night of 2 days ago
-    var firstBedTime = new Date();
-    firstBedTime.setDate(firstBedTime.getDate() - 1); //set to yesterday
-		firstBedTime.setHours(1, 3, 0, 0); //1:03am
-    var firstWakeTime = new Date();
-    firstWakeTime.setTime(firstBedTime.getTime() + 8 * 60 * 60 * 1000); //Sleep for exactly eight hours, waking up at 9:03am
+    var today = new Date();
+    var overnightSleepData: OvernightSleepData[] = [];
+    var sleepinessData: StanfordSleepinessData[] = [];
 
-    // Wake time was today at 8:11am, this counts as overnight sleep for today, the Night of 1 day ago
-    var secondBedTime = new Date();
-    secondBedTime.setDate(secondBedTime.getDate() - 1); //set to yesterday
-    secondBedTime.setHours(23, 11, 0, 0); //11:11pm
-    var secondWakeTime = new Date();
-    secondWakeTime.setTime(secondBedTime.getTime() + 9 * 60 * 60 * 1000); //Sleep for exactly nine hours, waking up at 8:11am
+    const defaultOvernights = [
+      { daysAgo: 6, sleep: [22, 30], wake: [ 6, 45], quality: 4},
+      { daysAgo: 5, sleep: [ 0, 40], wake: [ 7, 10], quality: 1},
+      { daysAgo: 4, sleep: [23,  0], wake: [12, 30], quality: 5},
+      { daysAgo: 3, sleep: [23, 20], wake: [ 7,  5], quality: 3},
+      { daysAgo: 2, sleep: [ 9,  0], wake: [16, 30], quality: 3},
+      { daysAgo: 1, sleep: [12, 30], wake: [19, 30], quality: 2},
+      // { daysAgo: 0, sleep: [ 1, 15], wake: [ 8, 45], quality: 4},
+    ];
 
-    // Wake time was 2 days ago at 6:28am, this counts as overnight sleep for the day 3 days ago, the Night of 3 days ago
-    var thirdBedTime = new Date();
-    thirdBedTime.setDate(thirdBedTime.getDate() - 3); //set to day before yesterday
-    thirdBedTime.setHours(22, 10, 0, 0); //10:10pm
-    var thirdWakeTime = new Date();
-    thirdWakeTime.setTime(thirdBedTime.getTime() + 8 * 60 * 60 * 1000 + 18 * 60 * 1000); //Sleep for eight hours and 18 minutes, waking up at 6:28am
+    for (const overnight of defaultOvernights) {
+      var wakeDate = new Date();
+      wakeDate.setDate(wakeDate.getDate() - overnight.daysAgo);
 
-    // Sleepiness rating for yesterday
-    var firstSleepinessDate = new Date();
-    firstSleepinessDate.setDate(firstSleepinessDate.getDate() - 1); //set to yesterday
-    firstSleepinessDate.setHours(14, 38, 0, 0); //2:38pm
+      var sleepTime = new Date();
+      sleepTime.setHours(overnight.sleep[0], overnight.sleep[1], 0, 0);
 
-    // Sleepiness rating for the day before yesterday
-    var secondSleepinessDate = new Date();
-    secondSleepinessDate.setDate(secondSleepinessDate.getDate() - 2); //set to yesterday
-    secondSleepinessDate.setHours(12, 1, 0); //12:01pm
+      var wakeTime = new Date();
+      wakeTime.setHours(overnight.wake[0], overnight.wake[1], 0, 0);
 
-    return {
-      overnight: [
-        new OvernightSleepData(firstBedTime, firstWakeTime, 3),
-        new OvernightSleepData(secondBedTime, secondWakeTime, 4),
-        new OvernightSleepData(thirdBedTime, thirdWakeTime, 5)
-      ],
-      sleepiness: [
-        new StanfordSleepinessData(4, firstSleepinessDate),
-        new StanfordSleepinessData(6, secondSleepinessDate),
-      ]
+      const { sleepStart, sleepEnd } = resolveSleepTimes(
+        wakeDate,
+        sleepTime,
+        wakeTime
+      );
+
+      // Only happens if we try to run the app before the most recent entry (i.e. we seed a 0 daysAgo record)
+      if (sleepEnd > today) {
+        continue;
+      }
+
+      overnightSleepData.push(new OvernightSleepData(sleepStart, sleepEnd, overnight.quality));
     }
+
+    const defaultStanfordSleepiness = [
+        { daysAgo: 6, time: [ 9, 15], value: 2 },
+        { daysAgo: 6, time: [15, 30], value: 4 },
+        { daysAgo: 4, time: [13, 30], value: 1 },
+        { daysAgo: 4, time: [18,  0], value: 2 },
+        { daysAgo: 3, time: [ 7, 45], value: 3 },
+        { daysAgo: 3, time: [15, 10], value: 4 },
+        { daysAgo: 3, time: [23, 30], value: 5 },
+        { daysAgo: 2, time: [ 3, 30], value: 6 },
+        { daysAgo: 2, time: [ 7, 50], value: 7 },
+        { daysAgo: 2, time: [18, 15], value: 4 },
+        { daysAgo: 1, time: [ 2,  0], value: 5 },
+        { daysAgo: 1, time: [10, 38], value: 6 },
+        { daysAgo: 1, time: [21,  0], value: 3 },
+        // { daysAgo: 0, time: [ 9,  0], value: 2 },
+        // { daysAgo: 0, time: [14, 15], value: 2 },
+        // { daysAgo: 0, time: [20,  0], value: 1 },
+    ];
+
+    for (const sleepiness of defaultStanfordSleepiness) {
+      var loggedAt = new Date();
+      loggedAt.setDate(loggedAt.getDate() - sleepiness.daysAgo);
+      loggedAt.setHours(sleepiness.time[0], sleepiness.time[1], 0, 0);
+
+      // Only happens if we try to run the app before the most recent entry (i.e. we seed a 0 daysAgo record)
+      if (loggedAt > today) {
+        continue;
+      }
+
+      sleepinessData.push(new StanfordSleepinessData(sleepiness.value, loggedAt));
+    }
+
+    return { overnightSleepData, sleepinessData };
 	}
 
   // Log overnight data into RAM and persistent storage
