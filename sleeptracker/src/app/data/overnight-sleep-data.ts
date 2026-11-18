@@ -1,5 +1,6 @@
 import { SleepData } from './sleep-data';
 import { OvernightRecord } from './sleep-record';
+import { dateToISOKey } from './sleep-time-utils';
 
 export class OvernightSleepData extends SleepData {
 	readonly sleepStart:Date;
@@ -79,5 +80,10 @@ export class OvernightSleepData extends SleepData {
       overnightRecord.id,
       new Date(overnightRecord.loggedAt)
     );
+  }
+
+  // Get an ISO-8601 formatted key for the day the user woke up
+  get wakeDateKey(): string {
+    return dateToISOKey(this.sleepEnd);
   }
 }
