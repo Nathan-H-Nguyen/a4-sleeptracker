@@ -31,7 +31,8 @@ export function numDaysAgo(pastDate: Date, laterDate: Date): number {
   return Math.round((later.getTime() - past.getTime()) / (24 * 60 * 60 * 1000));
 }
 
-export function relativeNightLabel(sleepEnd: Date, now: Date = new Date()): string {
+export function relativeNightLabel(sleepEnd: Date): string {
+  const now = new Date();
   const daysAgo: number = numDaysAgo(sleepEnd, now);
 
   if (daysAgo <= 0) {
@@ -45,7 +46,8 @@ export function relativeNightLabel(sleepEnd: Date, now: Date = new Date()): stri
   return `${daysAgo} days ago`
 }
 
-export function relativeMomentLabel(date: Date, now: Date = new Date()): string {
+export function relativeMomentLabel(date: Date): string {
+  const now = new Date();
   const daysAgo: number = numDaysAgo(date, now);
   const time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', });
 
