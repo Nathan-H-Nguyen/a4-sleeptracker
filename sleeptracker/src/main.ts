@@ -7,7 +7,7 @@ import { AppComponent } from './app/app.component';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 import { importProvidersFrom, provideAppInitializer, inject } from '@angular/core';
-import { AppStorageService } from './app/services/app-storage.service';
+import { SleepService } from './app/services/sleep.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,6 +19,6 @@ bootstrapApplication(AppComponent, {
       driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage],
     })),
     provideAppInitializer(() =>
-      inject(AppStorageService).init()),
+      inject(SleepService).init()),
   ],
 });
