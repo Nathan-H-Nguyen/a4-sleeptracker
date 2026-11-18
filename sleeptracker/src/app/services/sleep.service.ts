@@ -16,11 +16,11 @@ export class SleepService {
 
 	constructor(private readonly appStorage: AppStorageService) { }
 
-  get allOvernightData(): OvernightSleepData[] {
+  get allOvernightData(): readonly OvernightSleepData[] {
     return this.AllOvernightData;
   }
 
-  get allSleepinessData(): StanfordSleepinessData[] {
+  get allSleepinessData(): readonly StanfordSleepinessData[] {
     return this.AllSleepinessData;
   }
 
