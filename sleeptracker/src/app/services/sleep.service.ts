@@ -24,6 +24,16 @@ export class SleepService {
     return this.AllSleepinessData;
   }
 
+  // Returns allOvernightData sorted in order of sleepEnd time
+  get sortedAllOvernightData(): OvernightSleepData[] {
+    return [...this.AllOvernightData].sort((a, b) => b.sleepEnd.getTime() - a.sleepEnd.getTime());
+  }
+
+    // Returns allSleepinessData sorted in order of loggedAt time
+  get sortedAllSleepinessData() : StanfordSleepinessData[] {
+    return [...this.allSleepinessData].sort((a, b) => b.loggedAt.getTime() - a.loggedAt.getTime());
+  }
+
   async init(): Promise<void> {
     await this.appStorage.init();
 
