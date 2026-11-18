@@ -1,6 +1,7 @@
 import { SleepData } from './sleep-data';
 import { OvernightRecord } from './sleep-record';
 import { dateToISOKey } from './sleep-time-utils';
+import { relativeNightLabel } from './sleep-time-utils';
 
 export class OvernightSleepData extends SleepData {
 	readonly sleepStart:Date;
@@ -58,7 +59,7 @@ export class OvernightSleepData extends SleepData {
 	}
 
 	override dateString():string {
-		return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    return relativeNightLabel(this.sleepEnd);
 	}
 
   override toJSON(): OvernightRecord {

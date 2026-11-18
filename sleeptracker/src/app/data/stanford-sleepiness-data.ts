@@ -3,6 +3,7 @@
 
 import { SleepData } from './sleep-data';
 import { StanfordSleepinessRecord } from './sleep-record';
+import { relativeMomentLabel } from './sleep-time-utils';
 
 export class StanfordSleepinessData extends SleepData {
 	public static ScaleValues = [undefined,//Sleepiness scale starts at 1
@@ -33,6 +34,10 @@ export class StanfordSleepinessData extends SleepData {
 	override summaryString():string {
 		return this.loggedValue + ": " + this.description;
 	}
+
+  override dateString(): string {
+    return relativeMomentLabel(this.loggedAt);
+  }
 
   override toJSON(): StanfordSleepinessRecord {
     return {
