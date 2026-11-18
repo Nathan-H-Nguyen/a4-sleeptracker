@@ -7,14 +7,14 @@ export function dateToISOKey(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
-// Resolves the input sleepTime and wakeTime dates to the specified wakeDate. Useful for Calendar inputs where we are logging sleep for days aside from today
-// Sets sleepTime and wakeTime on the specified wakeDate, then if sleepTime is before wakeTime then we move it back a day
-export function resolveSleepTimes(wakeDate: Date, sleepTime: Date, wakeTime: Date): {sleepStart: Date, sleepEnd: Date} {
-  var sleepStart = new Date(wakeDate);
-  sleepStart.setHours(sleepTime.getHours(), sleepTime.getMinutes(), 0, 0);
+// Resolves a wake date and 2 clock times into correct sleepStart and sleepEnd times
+// Both times placed on the calendar wakeDate, if sleepStart is after sleepEnd then we move it back a day
+export function resolveSleepTimes(wakeDate: Date, sleepStartTime: Date, sleepEndTime: Date): { sleepStart: Date, sleepEnd: Date } {
+  const sleepStart = new Date(wakeDate);
+  sleepStart.setHours(sleepStartTime.getHours(), sleepStartTime.getMinutes(), 0, 0);
 
-  var sleepEnd = new Date(wakeDate);
-  sleepEnd.setHours(wakeTime.getHours(), wakeTime.getMinutes(), 0 ,0);
+  const sleepEnd = new Date(wakeDate);
+  sleepEnd.setHours(sleepEndTime.getHours(), sleepEndTime.getMinutes(), 0 ,0);
 
   // If start is after end then that means sleep is from PM -> AM | PM -> PM | AM -> AM so we move start back a day
   if (sleepStart >= sleepEnd) {
@@ -31,13 +31,13 @@ export function numDaysAgo(pastDate: Date, laterDate: Date): number {
   return Math.round((later.getTime() - past.getTime()) / (24 * 60 * 60 * 1000));
 }
 
-export function relativeNightLabel(wakeTime: Date, now: Date = new Date()): string {
-  const daysAgo: number = numDaysAgo(wakeTime, now);
+export function relativeNightLabel(sleepEnd: Date, now: Date = new Date()): string {
+  const daysAgo: number = numDaysAgo(sleepEnd, now);
 
   if (daysAgo <= 0) {
     return 'Last Night';
   } else if ( daysAgo < 7) {
-    const weekday = new Date(wakeTime);
+    const weekday = new Date(sleepEnd);
     weekday.setDate(weekday.getDate() - 1); // Offset by one since we are getting the Night we slept, not Day we woke
     return `${weekday.toLocaleDateString('en-US', { weekday: 'long' })} night`;
   }

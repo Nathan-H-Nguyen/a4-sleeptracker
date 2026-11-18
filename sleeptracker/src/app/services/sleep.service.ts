@@ -83,16 +83,16 @@ export class SleepService {
       var wakeDate = new Date();
       wakeDate.setDate(wakeDate.getDate() - overnight.daysAgo);
 
-      var sleepTime = new Date();
-      sleepTime.setHours(overnight.sleep[0], overnight.sleep[1], 0, 0);
+      var sleepStartTime = new Date();
+      sleepStartTime.setHours(overnight.sleep[0], overnight.sleep[1], 0, 0);
 
-      var wakeTime = new Date();
-      wakeTime.setHours(overnight.wake[0], overnight.wake[1], 0, 0);
+      var sleepEndTime = new Date();
+      sleepEndTime.setHours(overnight.wake[0], overnight.wake[1], 0, 0);
 
       const { sleepStart, sleepEnd } = resolveSleepTimes(
         wakeDate,
-        sleepTime,
-        wakeTime
+        sleepStartTime,
+        sleepEndTime
       );
 
       // Only happens if we try to run the app before the most recent entry (i.e. we seed a 0 daysAgo record)
