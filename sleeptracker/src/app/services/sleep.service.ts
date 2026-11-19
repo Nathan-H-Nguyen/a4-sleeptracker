@@ -3,7 +3,7 @@ import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { SleepRecord } from '../data/sleep-record';
 import { AppStorageService } from './app-storage.service';
-import { resolveSleepTimes } from '../data/sleep-time-utils';
+import { resolveSleepTimes, dateToISOKey, numDaysAgo } from '../data/sleep-time-utils';
 
 const STORAGE_KEY = 'sleep_data.v1';
 
@@ -32,6 +32,37 @@ export class SleepService {
     // Returns allSleepinessData sorted in order of loggedAt time
   get sortedAllSleepinessData() : StanfordSleepinessData[] {
     return [...this.allSleepinessData].sort((a, b) => b.loggedAt.getTime() - a.loggedAt.getTime());
+  }
+
+  // Get's the OvernightSleepData record for the given wakeDateKey (YYYY-MM-DD), if it doesn't exist returns undefined
+  getNightByWakeDate(wakeDateKey: string): OvernightSleepData | undefined {
+    return [...this.AllOvernightData].find(data => data.wakeDateKey === wakeDateKey);
+  }
+
+  // Get's the OvernightSleepData record for the last night, if it doesn't exist returns undefined
+  getLastNight(): OvernightSleepData | undefined {
+    const now = new Date()
+    return this.getNightByWakeDate(dateToISOKey(now));
+  }
+
+  // Get's the most recent OvernightSleepData record if it exists, else undefined
+  getMostRecentNight(): OvernightSleepData | undefined {
+    return this.sortedAllOvernightData[0];
+  }
+
+    // Returns the last N OvernightSleepData records sorted from oldest to newest, ending today.
+  // Days without records receive null
+  getLastNNights(n: number): (OvernightSleepData | null)[] {
+    const now = new Date();
+    var nights: (OvernightSleepData | null)[] = [];
+
+    for (let i = n-1; i >= 0; i--) {
+      const day = new Date(now);
+      day.setDate(day.getDate() - i);
+      nights.push(this.getNightByWakeDate(dateToISOKey(day)) ?? null);
+    }
+
+    return nights;
   }
 
   async init(): Promise<void> {
