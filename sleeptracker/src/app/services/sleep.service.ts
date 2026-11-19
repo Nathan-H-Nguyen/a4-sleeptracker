@@ -65,6 +65,41 @@ export class SleepService {
     return nights;
   }
 
+  // Returns the average amount of sleep in hours of the last n days
+  nAverageSleepHours(n: number): number | null {
+    const nights = this.getLastNNights(n);
+    var sum: number = 0;
+    var count: number = 0;
+
+    for (const night of nights) {
+      if (night !== null) {
+        sum += night.durationHours;
+        count++;
+      }
+    }
+
+    return count > 0 ? sum / count : null;
+  }
+
+  // Returns the average sleepiness over the last n days
+  // NOTE: this is not the average sleepiness over the last n checkins, but the average of all checkins over the last n days
+  nAverageSleepiness(n: number): number | null {
+    const now = new Date();
+    const checkins = this.AllSleepinessData.filter(data => {
+      const daysAgo = numDaysAgo(data.loggedAt, now);
+      return daysAgo >= 0 && daysAgo < n;
+    })
+    var sum: number = 0;
+    var count: number = 0;
+
+    for (const checkin of checkins) {
+      sum += checkin.loggedValue;
+      count++;
+    }
+
+    return count > 0 ? sum / count : null;
+  }
+
   async init(): Promise<void> {
     await this.appStorage.init();
 
