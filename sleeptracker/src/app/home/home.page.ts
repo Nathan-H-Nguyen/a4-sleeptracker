@@ -5,17 +5,15 @@ import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { HeaderComponent } from 'src/app/components/header/header.component';
-
-import { addIcons } from 'ionicons';
-import { moonOutline, sunnyOutline, starOutline, star } from 'ionicons/icons';
 import { HeroCardComponent } from 'src/app/components/hero-card/hero-card.component';
+import { ActionButtonComponent } from '../components/action-button/action-button.component';
 
 type logTag = 'overnight' | 'daytime';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, HeroCardComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, HeroCardComponent, ActionButtonComponent],
 })
 export class HomePage {
   today: Date = new Date();

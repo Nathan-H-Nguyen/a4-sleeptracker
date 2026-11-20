@@ -1,0 +1,18 @@
+<ion-card button class="action-card" (click)="pressed.emit()">
+  <ion-card-header class="action-card-header-container">
+    <div
+      class="action-button-icon"
+      [class.sun]="tone === 'sun'"
+      aria-hidden="true"
+    >
+      <ion-icon [name]="icon" aria-hidden="true" />
+    </div>
+    <div class="action-button-text-container" aria-hidden="true">
+      <ion-card-subtitle>{{ subtitle }}</ion-card-subtitle>
+      <ion-card-title>{{ title }} </ion-card-title>
+    </div>
+    <div class="action-button-plus">
+      <ion-icon name="add-outline" />
+    </div>
+  </ion-card-header>
+</ion-card>

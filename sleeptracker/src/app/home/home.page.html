@@ -3,5 +3,20 @@
     <app-header [eyebrow]="eyebrow" [headerText]="headerText" />
 
     <app-hero-card [mostRecentNight]="sleepService.getMostRecentNight()" />
+
+    <div class="action-button-container">
+      <app-action-button
+        icon="moon-outline"
+        title="Log Sleep"
+        subtitle="Add Entry"
+        tone="night"
+      />
+      <app-action-button
+        icon="sunny-outline"
+        title="Sleepiness"
+        subtitle="Check In"
+        tone="sun"
+      />
+    </div>
   </div>
 </ion-content>
