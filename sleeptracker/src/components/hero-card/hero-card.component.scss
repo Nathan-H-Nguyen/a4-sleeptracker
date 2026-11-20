@@ -1,0 +1,70 @@
+ion-card {
+  background: linear-gradient(145deg, rgb(55, 53, 84) 0%, rgb(104, 97, 132) 57%, rgb(129, 118, 149) 100%);
+  margin: 0;
+}
+
+.hero-card-subtitle {
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.hero-card-title-icon {
+  color: #FFFFFF;
+}
+
+.hero-card-duration-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-card-duration-container > p {
+  color: #FFFFFF;
+  font-size: 39px;
+  margin: 0;
+}
+
+.hero-card-duration-container > p > span {
+  color: var(--color-side-text);
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.hero-card-content-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 2px solid #7c7a85;
+}
+
+.hero-card-content-duration-container, .hero-card-content-rating-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.hero-card-content-duration-container {
+  color: #FFFFFF;
+}
+
+.hero-card-content-duration-container > p {
+  line-height: 1;
+}
+
+.hero-card-content-rating-container {
+  color: #FFFFFF;
+}
+
+// .sleep-quality-pill {
+//   background-color: rgba(255, 255, 255, 0.16);
+//   padding: 2px 8px;
+//   line-height: 1;
+//   border-radius: 15px;
+//   height: auto;
+// }

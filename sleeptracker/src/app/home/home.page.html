@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="page-container">
-    <ion-header [translucent]="false">
-      <app-header [eyebrow]="eyebrow" [headerText]="headerText"></app-header>
-    </ion-header>
+    <app-header [eyebrow]="eyebrow" [headerText]="headerText" />
+
+    <app-hero-card [mostRecentNight]="sleepService.getMostRecentNight()" />
   </div>
 </ion-content>

@@ -1,0 +1,68 @@
+<ion-card>
+  <ion-card-header>
+    @if (mostRecentNight) {
+      <div class="hero-card-title-container">
+        <ion-card-subtitle class="hero-card-subtitle"
+          >{{ mostRecentNight.dateString() }}
+          <ion-icon
+            class="hero-card-title-icon"
+            name="moon-outline"
+            aria-hidden="true"
+          />
+        </ion-card-subtitle>
+        <ion-card-title>
+          <div class="hero-card-duration-container">
+            <!-- prettier-ignore-->
+            <p class="hero-card-duration">{{ mostRecentNight.hours }}<span>h </span></p>
+            <!-- prettier-ignore-->
+            <p class="hero-card-duration">{{ mostRecentNight.minutes }}<span>m</span></p>
+          </div>
+        </ion-card-title>
+      </div>
+    } @else {
+      <div class="hero-card-title-container">
+        <ion-card-subtitle class="hero-card-subtitle"
+          >No Logged Sleep Yet
+          <ion-icon
+            class="hero-card-title-icon"
+            name="moon-outline"
+            aria-hidden="true"
+          />
+        </ion-card-subtitle>
+        <ion-card-title>
+          <div class="hero-card-duration-container">
+            <p>Log Sleep Below</p>
+          </div>
+        </ion-card-title>
+      </div>
+    }
+  </ion-card-header>
+
+  @if (mostRecentNight) {
+    <ion-card-content>
+      <div class="hero-card-content-container">
+        <div class="hero-card-content-duration-container">
+          <ion-icon class="hero-card-content-icon" name="time-outline" />
+          <p>
+            <span>{{ mostRecentNight.summaryString() }}</span>
+          </p>
+        </div>
+        <div class="hero-card-content-rating-container">
+          <div class="stars-container">
+            @for (star of stars; track star) {
+              <ion-icon
+                class="star"
+                [name]="
+                  star <= mostRecentNight.sleepQuality ? 'star' : 'star-outline'
+                "
+              />
+            }
+          </div>
+          <div class="sleep-quality-pill">
+            <p>{{ mostRecentNight.qualityLabel }}</p>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  }
+</ion-card>

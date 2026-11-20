@@ -1,22 +1,31 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { HeaderComponent } from 'src/components/header/header.component';
 
+import { addIcons } from 'ionicons';
+import { moonOutline, sunnyOutline, starOutline, star } from 'ionicons/icons';
+import { HeroCardComponent } from 'src/components/hero-card/hero-card.component';
+
 type logTag = 'overnight' | 'daytime';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, HeroCardComponent],
 })
 export class HomePage {
   today: Date = new Date();
+
+  // Header
   eyebrow: string = '';
   headerText: string = '';
+
+  // Hero Card
+
 
   constructor(public sleepService:SleepService) {	}
 

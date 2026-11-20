@@ -34,6 +34,14 @@ export class OvernightSleepData extends SleepData {
     return this.durationMs / (1000 * 60 * 60);
   }
 
+  get hours(): number {
+    return Math.floor(this.durationMs/ (1000 * 60 * 60));
+  }
+
+  get minutes(): number {
+    return Math.round(this.durationMs / (1000 * 60)) % 60;
+  }
+
   get qualityLabel(): string {
     switch(this.sleepQuality) {
       case 1:
@@ -52,12 +60,10 @@ export class OvernightSleepData extends SleepData {
   }
 
 	override summaryString():string {
-		var difference_ms = this.durationMs;
-
-		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes.";
+		return `${this.sleepStart.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', })} - ${this.sleepEnd.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', })}`;
 	}
 
+  // Last Night, day of the week, 7+ days ago, etc.
 	override dateString():string {
     return relativeNightLabel(this.sleepEnd);
 	}
