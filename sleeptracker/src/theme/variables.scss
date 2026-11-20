@@ -1,7 +1,11 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+@import '@fontsource-variable/dm-sans';
+@import '@fontsource-variable/manrope';
 
 :root {
+  --ion-font-family: 'DM Sans Variable';
+  --font-heading: 'Manrope Variable';
   --color-eyebrow: #92909C;
   --color-header: #20202D;
   --color-side-text: #9B98A3;
