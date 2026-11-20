@@ -4,11 +4,11 @@ import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
-import { HeaderComponent } from 'src/components/header/header.component';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 import { addIcons } from 'ionicons';
 import { moonOutline, sunnyOutline, starOutline, star } from 'ionicons/icons';
-import { HeroCardComponent } from 'src/components/hero-card/hero-card.component';
+import { HeroCardComponent } from 'src/app/components/hero-card/hero-card.component';
 
 type logTag = 'overnight' | 'daytime';
 @Component({
