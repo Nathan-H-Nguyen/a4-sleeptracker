@@ -6,6 +6,7 @@ import { AppStorageService } from './app-storage.service';
 import { resolveSleepTimes, dateToISOKey, numDaysAgo } from '../data/sleep-time-utils';
 
 const STORAGE_KEY = 'sleep_data.v1';
+const SEED_DEFAULT_DATA = true;
 
 @Injectable({
   providedIn: 'root'
@@ -150,6 +151,10 @@ export class SleepService {
   }
 
 	private createDefaultData() {
+    if (!SEED_DEFAULT_DATA) {
+      return { overnightSleepData: [], sleepinessData: [] };
+    }
+
     var today = new Date();
     var overnightSleepData: OvernightSleepData[] = [];
     var sleepinessData: StanfordSleepinessData[] = [];
