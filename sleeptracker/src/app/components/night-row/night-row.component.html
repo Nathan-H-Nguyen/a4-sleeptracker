@@ -1,0 +1,25 @@
+<div class="night-row">
+  <div class="left">
+    <div class="date-container">
+      <span class="day">{{ day }}</span>
+      <span class="month">{{ shortMonth }}</span>
+    </div>
+
+    <div class="night-details">
+      <span class="date-label">{{ night.dateString() }}</span>
+      <span class="sleep-time">{{ night.summaryString() }}</span>
+    </div>
+  </div>
+
+  <div class="summary">
+    <span class="hour-duration">{{ durationHour }}</span>
+    <div class="stars-container">
+      @for (star of stars; track star) {
+        <ion-icon
+          class="star"
+          [name]="star <= night.sleepQuality ? 'star' : 'star-outline'"
+        />
+      }
+    </div>
+  </div>
+</div>

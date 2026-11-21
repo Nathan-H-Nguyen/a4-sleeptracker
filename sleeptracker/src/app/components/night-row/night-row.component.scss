@@ -1,0 +1,82 @@
+:host {
+  display: block;
+  flex: 1;
+  width: 100;
+}
+
+.night-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ebe5f3;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  line-height: 1;
+}
+
+.date-container > span {
+  color: #57526B;
+  font-weight: 700;
+}
+
+.day {
+  font-size: 16px;
+}
+
+.month {
+  font-size: 12px;
+}
+
+.night-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-label {
+  color: #373540;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sleep-time {
+  color: #9C99A4;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.hour-duration {
+  color: #4E4A5E;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.star {
+  color: #8B82A1;
+  font-size: 10px;
+  margin: 0;
+}

@@ -29,5 +29,19 @@
     <app-recent-logs-overnight-week-chart
       [nights]="sleepService.getLastNNights(7)"
     />
-  }
+
+    <ion-card>
+      <ion-list lines="full" class="night-list">
+        @for (night of recentNights; track night.id) {
+          <ion-item button (click)="onNightSelected(night)">
+            <app-night-row [night]="night" />
+          </ion-item>
+        } @empty {
+          <ion-item class="empty-night-list"
+            >No nights logged in the last 7 days.</ion-item
+          >
+        }
+      </ion-list>
+    </ion-card>
+  } @else {}
 </div>

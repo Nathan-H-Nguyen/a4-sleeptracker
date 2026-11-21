@@ -43,5 +43,4 @@ export class RecentLogsOvernightWeekChartComponent  implements OnInit {
   metGoal(hours: number): boolean {
     return hours >= 8;
   }
-
 }

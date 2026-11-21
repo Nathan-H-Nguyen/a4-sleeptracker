@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/angular/standalone';
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonList, IonItem, IonCard } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { moon, moonOutline, sunnyOutline } from 'ionicons/icons';
+import { moonOutline, sunnyOutline } from 'ionicons/icons';
 import { RecentLogsOvernightWeekChartComponent } from '../recent-logs-overnight-week-chart/recent-logs-overnight-week-chart.component';
 import { SleepService } from 'src/app/services/sleep.service';
+import { NightRowComponent } from '../night-row/night-row.component';
+import { OvernightSleepData } from 'src/app/data/overnight-sleep-data';
 
 export type RecentLogTab = 'overnight' | 'daytime';
 
@@ -11,7 +13,7 @@ export type RecentLogTab = 'overnight' | 'daytime';
   selector: 'app-recent-logs',
   templateUrl: './recent-logs.component.html',
   styleUrls: ['./recent-logs.component.scss'],
-  imports: [IonSegment, IonSegmentButton, IonLabel, IonIcon, RecentLogsOvernightWeekChartComponent],
+  imports: [IonSegment, IonSegmentButton, IonLabel, IonIcon, IonList, IonItem, IonCard, RecentLogsOvernightWeekChartComponent, NightRowComponent],
 })
 export class RecentLogsComponent  implements OnInit {
   @Input({ required: true }) eyebrow!: string;
@@ -29,4 +31,11 @@ export class RecentLogsComponent  implements OnInit {
 
   ngOnInit() {}
 
+  get recentNights(): OvernightSleepData[] {
+    return this.sleepService.getLastNNights(7).filter((night): night is OvernightSleepData => night != null).reverse();
+  }
+
+  onNightSelected(night: OvernightSleepData): void {
+    // Implement this later, should direct to calendar
+  }
 }

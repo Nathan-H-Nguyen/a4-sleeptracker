@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
-import { SleepData } from '../data/sleep-data';
-import { OvernightSleepData } from '../data/overnight-sleep-data';
-import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { HeroCardComponent } from 'src/app/components/hero-card/hero-card.component';
 import { ActionButtonComponent } from '../components/action-button/action-button.component';
