@@ -1,0 +1,27 @@
+<div class="recent-logs-container">
+  <div class="recent-logs-section-header">
+    <div class="header-title">
+      <p class="header-eyebrow">{{ eyebrow }}</p>
+      <h2 class="header-text">{{ headerText }}</h2>
+    </div>
+
+    <div class="average-sleep">
+      <p>{{ averageValue }} <span> avg.</span></p>
+    </div>
+  </div>
+
+  <ion-segment [value]="selectedTab" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="overnight">
+      <div>
+        <ion-icon name="moon-outline" aria-hidden="true" />
+        <ion-label>Overnight</ion-label>
+      </div>
+    </ion-segment-button>
+    <ion-segment-button value="daytime">
+      <div>
+        <ion-icon name="sunny-outline" aria-hidden="true" />
+        <ion-label>Daytime</ion-label>
+      </div>
+    </ion-segment-button>
+  </ion-segment>
+</div>

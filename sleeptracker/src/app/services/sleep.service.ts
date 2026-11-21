@@ -78,7 +78,7 @@ export class SleepService {
       }
     }
 
-    return count > 0 ? sum / count : null;
+    return count > 0 ? Number((sum / count).toFixed(1)) : null;
   }
 
   // Returns the average sleepiness over the last n days
