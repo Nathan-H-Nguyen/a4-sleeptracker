@@ -15,6 +15,16 @@ export class StanfordSleepinessData extends SleepData {
 	'Sleepy, woozy, fighting sleep; prefer to lie down', //6
 	'No longer fighting sleep, sleep onset soon; having dream-like thoughts']; //7
 
+  public static shortScaledValues = [undefined,
+    'Wide awake',
+    'Alert',
+    'Relaxed',
+    'Somewhat Foggy',
+    'Foggy',
+    'Fighting sleep',
+    'Dozing off'
+  ]
+
 	readonly loggedValue:number;
 
 	constructor(loggedValue:number, loggedAt?: Date, id?: string) {
@@ -29,6 +39,10 @@ export class StanfordSleepinessData extends SleepData {
 
   get description() {
     return StanfordSleepinessData.ScaleValues[this.loggedValue] ?? "";
+  }
+
+  get shortDescription() {
+    return StanfordSleepinessData.shortScaledValues[this.loggedValue] ?? "";
   }
 
 	override summaryString():string {

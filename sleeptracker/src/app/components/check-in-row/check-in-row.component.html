@@ -1,0 +1,16 @@
+<div class="daytime-row">
+  <div class="left">
+    <div class="sleepiness-container" [attr.sleepiness]="checkIn.loggedValue">
+      <span class="sleepiness">{{ checkIn.loggedValue }}</span>
+    </div>
+
+    <div class="daytime-details">
+      <span class="quality-label">{{ checkIn.shortDescription }}</span>
+      <span class="date-label">{{ checkIn.dateString() }}</span>
+    </div>
+  </div>
+
+  <div class="summary">
+    <span class="quality-level">Level {{ checkIn.loggedValue }}</span>
+  </div>
+</div>

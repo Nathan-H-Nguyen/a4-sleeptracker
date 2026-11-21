@@ -6,6 +6,8 @@ import { RecentLogsOvernightWeekChartComponent } from '../recent-logs-overnight-
 import { SleepService } from 'src/app/services/sleep.service';
 import { NightRowComponent } from '../night-row/night-row.component';
 import { OvernightSleepData } from 'src/app/data/overnight-sleep-data';
+import { CheckInRowComponent } from '../check-in-row/check-in-row.component';
+import { StanfordSleepinessData } from 'src/app/data/stanford-sleepiness-data';
 
 export type RecentLogTab = 'overnight' | 'daytime';
 
@@ -13,7 +15,7 @@ export type RecentLogTab = 'overnight' | 'daytime';
   selector: 'app-recent-logs',
   templateUrl: './recent-logs.component.html',
   styleUrls: ['./recent-logs.component.scss'],
-  imports: [IonSegment, IonSegmentButton, IonLabel, IonIcon, IonList, IonItem, IonCard, RecentLogsOvernightWeekChartComponent, NightRowComponent],
+  imports: [IonSegment, IonSegmentButton, IonLabel, IonIcon, IonList, IonItem, IonCard, RecentLogsOvernightWeekChartComponent, NightRowComponent, CheckInRowComponent],
 })
 export class RecentLogsComponent  implements OnInit {
   @Input({ required: true }) eyebrow!: string;
@@ -37,5 +39,9 @@ export class RecentLogsComponent  implements OnInit {
 
   onNightSelected(night: OvernightSleepData): void {
     // Implement this later, should direct to calendar
+  }
+
+  onCheckInSelected(checkIn: StanfordSleepinessData): void {
+
   }
 }
