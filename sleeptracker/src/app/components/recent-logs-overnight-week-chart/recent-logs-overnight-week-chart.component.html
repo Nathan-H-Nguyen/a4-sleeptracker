@@ -1,0 +1,27 @@
+<ion-card class="recent-logs-week-chart">
+  <div class="week-chart-header">
+    <span class="week-chart-title">7-day sleep</span>
+    <span class="week-chart-goal">Goal 8h</span>
+  </div>
+
+  <div class="day-bars">
+    @for (day of days; track $index) {
+      <div class="bar" role="img">
+        @if (day.hours !== null) {
+          <div
+            class="fill"
+            [class.today]="day.isToday"
+            [class.met-goal]="metGoal(day.hours)"
+            [style.height.%]="barHeight(day.hours)"
+          ></div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="letters" aria-hidden="true">
+    @for (day of days; track $index) {
+      <span [class.today]="day.isToday">{{ day.dayLetter }}</span>
+    }
+  </div>
+</ion-card>

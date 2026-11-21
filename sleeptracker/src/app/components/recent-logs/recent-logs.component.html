@@ -24,4 +24,10 @@
       </div>
     </ion-segment-button>
   </ion-segment>
+
+  @if (selectedTab === "overnight") {
+    <app-recent-logs-overnight-week-chart
+      [nights]="sleepService.getLastNNights(7)"
+    />
+  }
 </div>

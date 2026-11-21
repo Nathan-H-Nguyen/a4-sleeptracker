@@ -1,0 +1,72 @@
+ion-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 16px;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.week-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+
+.week-chart-title {
+  font-weight: 600;
+  color: #777480;
+}
+
+.week-chart-goal {
+  font-weight: 500;
+  color: #AAA7B1;
+}
+
+.day-bars {
+  height: 65px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.bar {
+  position: relative;
+  height: 100%;
+  border-radius: 10px;
+  background: #F3F1F5;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+  background: #CBC6D7;
+}
+
+.fill.met-goal {
+  background: linear-gradient(rgb(140, 128, 186), rgb(170, 160, 208));
+}
+
+.fill.today {
+  background: linear-gradient(rgb(101, 95, 131), rgb(139, 130, 160));
+}
+
+.letters {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #92909c;
+}
+
+.letters .today {
+  font-weight: 700;
+  color: #20202d;
+}
