@@ -1,0 +1,46 @@
+<ion-content class="ion-padding">
+  <header class="sheet-header">
+    <div class="left">
+      <div class="icon-badge" aria-hidden="true">
+        <ion-icon name="sunny-outline" />
+      </div>
+      <div class="titles">
+        <p>STANFORD SLEEPINESS SCALE</p>
+        <h2>How sleepy are you?</h2>
+      </div>
+    </div>
+    <ion-button fill="clear" (click)="onClose()">
+      <ion-icon name="close" />
+    </ion-button>
+  </header>
+
+  <p class="description">
+    Choose the statement that best described how you feel right now.
+  </p>
+
+  <ion-radio-group [value]="selectedLevel" (ionChange)="onLevelChange($event)">
+    <div class="level-list">
+      @for (level of sleepinessLevels; track level) {
+        <ion-card
+          class="level-option"
+          [class.selected]="selectedLevel === level"
+        >
+          <ion-radio [value]="level" justify="space-between">
+            <span class="level-number" [attr.data-level]="level">{{
+              level
+            }}</span>
+            <span class="level-text">{{ descriptions[level] }}</span>
+          </ion-radio>
+        </ion-card>
+      }
+    </div>
+  </ion-radio-group>
+
+  <ion-button
+    expand="block"
+    class="save-button"
+    [disabled]="selectedLevel === null || isSaving"
+    (click)="onSave()"
+    >Save Check-In</ion-button
+  >
+</ion-content>

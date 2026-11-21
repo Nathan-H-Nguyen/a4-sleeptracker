@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonContent, IonModal } from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { HeroCardComponent } from 'src/app/components/hero-card/hero-card.component';
 import { ActionButtonComponent } from '../components/action-button/action-button.component';
 import { RecentLogTab, RecentLogsComponent } from '../components/recent-logs/recent-logs.component';
+import { SleepinessSheetComponent } from '../components/sleepiness-sheet/sleepiness-sheet.component';
 
 type logTag = 'overnight' | 'daytime';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, HeroCardComponent, ActionButtonComponent, RecentLogsComponent],
+  imports: [IonContent, IonModal, HeaderComponent, HeroCardComponent, ActionButtonComponent, RecentLogsComponent, SleepinessSheetComponent],
 })
 export class HomePage {
   today: Date = new Date();
@@ -21,8 +22,13 @@ export class HomePage {
   eyebrow: string = '';
   headerText: string = '';
 
+  // Sleepiness check in
+  isCheckInOpen = false;
+
   // Hero Card
-  constructor(public sleepService:SleepService) {	}
+  constructor(
+    public sleepService:SleepService,
+  ) {	}
 
   ionViewWillEnter() {
     this.today = new Date();
@@ -36,7 +42,7 @@ export class HomePage {
 
     if (hour >= 5 && hour < 12) {
       return 'Good morning';
-    } else if (hour > 12 && hour < 17) {
+    } else if (hour >= 12 && hour < 17) {
       return 'Good afternoon';
     }
 
@@ -56,5 +62,18 @@ export class HomePage {
     }
 
     return this.selectedTab === 'overnight' ? `${avg.toFixed(1)}h` : `${avg.toFixed(1)}`;
+  }
+
+  onLogSleep() {
+    //implement later
+  }
+
+  async onCheckIn(): Promise<void> {
+    this.isCheckInOpen = true;
+  }
+
+  async onCheckInDismiss(event: CustomEvent): Promise<void> {
+    this.isCheckInOpen = false;
+    // Implement toast later?
   }
 }

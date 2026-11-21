@@ -10,12 +10,14 @@
         title="Log Sleep"
         subtitle="Add Entry"
         tone="night"
+        (pressed)="onLogSleep()"
       />
       <app-action-button
         icon="sunny-outline"
         title="Sleepiness"
         subtitle="Check In"
         tone="sun"
+        (pressed)="onCheckIn()"
       />
     </div>
 
@@ -26,4 +28,20 @@
       [averageValue]="averageValue"
     />
   </div>
+
+  <ion-modal
+    #checkInModal
+    [isOpen]="isCheckInOpen"
+    [breakpoints]="[0, 0.80, 1]"
+    [initialBreakpoint]="0.80"
+    (didDismiss)="onCheckInDismiss($event)"
+  >
+    <ng-template>
+      <app-sleepiness-sheet
+        class="ion-page"
+        (saved)="checkInModal.dismiss()"
+        (closed)="checkInModal.dismiss()"
+      />
+    </ng-template>
+  </ion-modal>
 </ion-content>
