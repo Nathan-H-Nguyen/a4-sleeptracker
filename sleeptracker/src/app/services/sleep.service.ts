@@ -65,6 +65,14 @@ export class SleepService {
     return nights;
   }
 
+  getLastNDaysCheckIns(n: number): StanfordSleepinessData[] {
+    const now = new Date();
+    return this.sortedAllSleepinessData.filter(data => {
+      const daysAgo = numDaysAgo(data.loggedAt, now);
+      return daysAgo >= 0 && daysAgo < n;
+    })
+  }
+
   // Returns the average amount of sleep in hours of the last n days
   nAverageSleepHours(n: number): number | null {
     const nights = this.getLastNNights(n);
@@ -78,26 +86,27 @@ export class SleepService {
       }
     }
 
-    return count > 0 ? Number((sum / count).toFixed(1)) : null;
+    return count > 0 ? sum / count : null;
   }
 
   // Returns the average sleepiness over the last n days
   // NOTE: this is not the average sleepiness over the last n checkins, but the average of all checkins over the last n days
   nAverageSleepiness(n: number): number | null {
-    const now = new Date();
-    const checkins = this.AllSleepinessData.filter(data => {
-      const daysAgo = numDaysAgo(data.loggedAt, now);
-      return daysAgo >= 0 && daysAgo < n;
-    })
+    const checkIns = this.getLastNDaysCheckIns(n);
+
+    if (checkIns.length === 0 ) {
+      return null;
+    }
+
     var sum: number = 0;
     var count: number = 0;
 
-    for (const checkin of checkins) {
-      sum += checkin.loggedValue;
+    for (const checkIn of checkIns) {
+      sum += checkIn.loggedValue;
       count++;
     }
 
-    return count > 0 ? sum / count : null;
+    return sum / count;
   }
 
   async init(): Promise<void> {
