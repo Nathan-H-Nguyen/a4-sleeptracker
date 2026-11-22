@@ -30,6 +30,22 @@
   </div>
 
   <ion-modal
+    #logSleepModal
+    [isOpen]="isLogSleepOpen"
+    [breakpoints]="[0, 0.37, 1]"
+    [initialBreakpoint]="0.37"
+    (didDismiss)="onLogSleepDismiss()"
+  >
+    <ng-template>
+      <app-sleep-sheet
+        class="ion-page"
+        (saved)="logSleepModal.dismiss()"
+        (closed)="logSleepModal.dismiss()"
+      />
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
     #checkInModal
     [isOpen]="isCheckInOpen"
     [breakpoints]="[0, 0.80, 1]"

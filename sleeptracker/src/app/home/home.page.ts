@@ -6,13 +6,14 @@ import { HeroCardComponent } from 'src/app/components/hero-card/hero-card.compon
 import { ActionButtonComponent } from '../components/action-button/action-button.component';
 import { RecentLogTab, RecentLogsComponent } from '../components/recent-logs/recent-logs.component';
 import { SleepinessSheetComponent } from '../components/sleepiness-sheet/sleepiness-sheet.component';
+import { SleepSheetComponent } from '../components/sleep-sheet/sleep-sheet.component';
 
 type logTag = 'overnight' | 'daytime';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonContent, IonModal, HeaderComponent, HeroCardComponent, ActionButtonComponent, RecentLogsComponent, SleepinessSheetComponent],
+  imports: [IonContent, IonModal, HeaderComponent, HeroCardComponent, ActionButtonComponent, RecentLogsComponent, SleepinessSheetComponent, SleepSheetComponent],
 })
 export class HomePage {
   today: Date = new Date();
@@ -24,6 +25,7 @@ export class HomePage {
 
   // Sleepiness check in
   isCheckInOpen = false;
+  isLogSleepOpen = false;
 
   // Hero Card
   constructor(
@@ -65,7 +67,11 @@ export class HomePage {
   }
 
   onLogSleep() {
-    //implement later
+    this.isLogSleepOpen = true;
+  }
+
+  async onLogSleepDismiss() {
+    this.isLogSleepOpen = false;
   }
 
   async onCheckIn(): Promise<void> {

@@ -1,0 +1,151 @@
+ion-content {
+  --background: #f7f6fa;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-badge {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eeeaf6;
+  color: #625c86;
+  flex-shrink: 0;
+}
+
+.icon-badge ion-icon {
+  font-size: 22px;
+}
+
+.titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.titles > p {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #625c86;
+}
+
+.titles > h2 {
+  margin: 2px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #20202d;
+}
+
+.sheet-header ion-button {
+  --color: #92909c;
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6f6c79;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+ion-datetime-button {
+  width: 100%;
+}
+
+ion-datetime-button::part(native) {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1.5px solid #ecebf0;
+  color: #20202d;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.error {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #b3261e;
+}
+
+.notice {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #625c86;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+}
+
+.star-button {
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #8b82a1;
+  line-height: 0;
+}
+
+.star-button ion-icon {
+  display: block;
+  font-size: 30px;
+}
+
+.star-button:focus-visible {
+  outline: 2px solid #625c86;
+  outline-offset: 2px;
+}
+
+.save-button {
+  margin-top: 22px;
+  --background: #625c86;
+  --background-activated: #514c71;
+  --background-hover: #514c71;
+  --color: #ffffff;
+  --border-radius: 14px;
+  --box-shadow: none;
+  height: 50px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.save-button[disabled] {
+  opacity: 0.45;
+}

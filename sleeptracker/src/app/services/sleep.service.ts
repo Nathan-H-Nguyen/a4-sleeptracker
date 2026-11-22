@@ -230,6 +230,9 @@ export class SleepService {
 
   // Log overnight data into RAM and persistent storage
 	async logOvernightData(sleepData: OvernightSleepData) {
+    if (this.getNightByWakeDate(sleepData.wakeDateKey)) {
+      throw new Error("This night has already been logged");
+    }
 		this.AllOvernightData.push(sleepData);
     await this.persist();
 	}
@@ -244,5 +247,15 @@ export class SleepService {
   private async persist() {
     const records = [...this.AllOvernightData, ...this.AllSleepinessData].map(data => data.toJSON());
     await this.appStorage.set(STORAGE_KEY, records);
+  }
+
+  async updateOvernightData(updated: OvernightSleepData): Promise<void> {
+    const index = this.AllOvernightData.findIndex(night => night.id === updated.id);
+    if (index === -1) {
+      throw new Error('No overnight entry with that id');
+    }
+
+    this.AllOvernightData[index] = updated;
+    await this.persist();
   }
 }

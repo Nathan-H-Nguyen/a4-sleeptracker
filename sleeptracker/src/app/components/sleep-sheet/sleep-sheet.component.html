@@ -1,0 +1,90 @@
+<ion-content class="ion-padding">
+  <header class="sheet-header">
+    <div class="left">
+      <div class="icon-badge" aria-hidden="true">
+        <ion-icon name="moon-outline" />
+      </div>
+      <div class="titles">
+        <p>Overnight</p>
+        <h2>Log Sleep</h2>
+      </div>
+    </div>
+    <ion-button fill="clear" aria-label="Close" (click)="onClose()">
+      <ion-icon slot="icon-only" name="close" />
+    </ion-button>
+  </header>
+
+  <div class="time-row">
+    <div class="field">
+      <span class="field-label" id="bed-time-label">Fell asleep</span>
+      <ion-datetime-button
+        datetime="bed-time"
+        aria-labelledby="bed-time-label"
+      />
+    </div>
+    <div class="field">
+      <span class="field-label" id="wake-time-label">Woke up</span>
+      <ion-datetime-button
+        datetime="wake-time"
+        aria-labelledby="wake-time-label"
+      />
+    </div>
+  </div>
+
+  @if (validationError) {
+    <p class="error" role="alert">{{ validationError }}</p>
+  }
+
+  <div class="field">
+    <span class="field-label" id="quality-label">Sleep quality</span>
+    <div class="stars" role="radiogroup" aria-labelledby="quality-label">
+      @for (position of stars; track position) {
+        <button
+          type="button"
+          class="star-button"
+          role="radio"
+          [attr.aria-checked]="quality === position"
+          [attr.aria-label]="position + (position === 1 ? ' star' : ' stars')"
+          (click)="quality = position"
+        >
+          <ion-icon
+            [name]="
+              quality !== null && position <= quality ? 'star' : 'star-outline'
+            "
+            aria-hidden="true"
+          />
+        </button>
+      }
+    </div>
+  </div>
+
+  <ion-button
+    expand="block"
+    class="save-button"
+    [disabled]="!canSave"
+    (click)="onSave()"
+  >
+    Save Sleep
+  </ion-button>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="bed-time"
+        presentation="time"
+        [value]="sleepStart"
+        (ionChange)="sleepStart = $any($event.detail.value)"
+      />
+    </ng-template>
+  </ion-modal>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime
+        id="wake-time"
+        presentation="time"
+        [value]="sleepEnd"
+        (ionChange)="sleepEnd = $any($event.detail.value)"
+      />
+    </ng-template>
+  </ion-modal>
+</ion-content>
