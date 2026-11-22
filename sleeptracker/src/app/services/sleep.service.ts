@@ -40,6 +40,10 @@ export class SleepService {
     return [...this.AllOvernightData].find(data => data.wakeDateKey === wakeDateKey);
   }
 
+  getCheckInsByWakeDate(wakeDateKey: string): StanfordSleepinessData[] {
+    return this.allSleepinessData.filter(data => dateToISOKey(data.loggedAt) === wakeDateKey).sort((a, b) => a.loggedAt.getTime() - b.loggedAt.getTime());
+  }
+
   // Get's the OvernightSleepData record for the last night, if it doesn't exist returns undefined
   getLastNight(): OvernightSleepData | undefined {
     const now = new Date()

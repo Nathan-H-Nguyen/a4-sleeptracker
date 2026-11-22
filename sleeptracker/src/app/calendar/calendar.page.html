@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>calendar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">calendar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="page-container">
+    <app-header eyebrow="SLEEP JOURNAL" headerText="Calendar" />
+
+    <ion-card class="calendar-card">
+      <div class="month-nav">
+        <ion-button
+          fill="clear"
+          aria-label="Previous month"
+          (click)="changeMonth(-1)"
+        >
+          <ion-icon slot="icon-only" name="chevron-back-outline" />
+        </ion-button>
+        <div class="month-title">
+          <h2>{{ monthLabel }}</h2>
+          <span class="month-count"
+            >{{ loggedNightsCurrentMonth }} nights logged</span
+          >
+        </div>
+        <ion-button
+          fill="clear"
+          aria-label="Next month"
+          [disabled]="isCurrentMonth"
+          (click)="changeMonth(1)"
+        >
+          <ion-icon slot="icon-only" name="chevron-forward-outline" />
+        </ion-button>
+      </div>
+
+      <div class="grid weekdays" aria-hidden="true">
+        @for (letter of weekdayLetters; track $index) {
+        <span>{{ letter }}</span>
+        }
+      </div>
+
+      <div class="grid days">
+        @for (cell of cells; track $index) { @if (cell) {
+        <button
+          type="button"
+          class="day"
+          [class.today]="cell.isToday"
+          [class.selected]="cell.key === selectedKey"
+          [disabled]="cell.isFuture"
+          [attr.aria-label]="cellLabel(cell)"
+          [attr.aria-pressed]="cell.key === selectedKey"
+          (click)="selectDay(cell)"
+        >
+          <span class="day-number">{{ cell.day }}</span>
+          <span class="dots" aria-hidden="true">
+            @if (cell.hasNight) { <span class="dot night"></span> } @if
+            (cell.hasCheckIns) { <span class="dot sun"></span> }
+          </span>
+        </button>
+        } @else {
+        <span class="day empty"></span>
+        } }
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <span><span class="dot night"></span> Overnight</span>
+        <span><span class="dot sun"></span> Sleepiness</span>
+      </div>
+    </ion-card>
+
+    <section class="day-details">
+      <p class="eyebrow">Day details</p>
+      <h2>{{ selectedDayLabel }}</h2>
+
+      @if (selectedNight || selectedCheckIns.length) {
+      <ion-card class="day-detail-list">
+        <ion-list lines="full" class="detail-list">
+          @if (selectedNight) {
+          <ion-item><app-night-row [night]="selectedNight" /></ion-item>
+          } @for (checkIn of selectedCheckIns; track checkIn.id) {
+          <ion-item><app-check-in-row [checkIn]="checkIn" /></ion-item>
+          }
+        </ion-list>
+      </ion-card>
+      } @else {
+      <p class="empty-day">No entries for this day.</p>
+      }
+    </section>
+  </div>
 </ion-content>
