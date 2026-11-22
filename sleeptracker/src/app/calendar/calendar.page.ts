@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { IonContent, IonButton, IonIcon, IonItem, IonList, IonCard } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
@@ -9,6 +9,7 @@ import { dateToISOKey } from '../data/sleep-time-utils';
 import { HeaderComponent } from '../components/header/header.component';
 import { NightRowComponent } from '../components/night-row/night-row.component';
 import { CheckInRowComponent } from '../components/check-in-row/check-in-row.component';
+import { ActivatedRoute } from '@angular/router';
 
 interface CalendarCell {
   day: number;
@@ -32,7 +33,7 @@ export class CalendarPage implements OnInit {
   currentMonth: Date;
   selectedKey = this.todayKey;
 
-  constructor(public sleepService:SleepService) {
+  constructor(public sleepService:SleepService, public route: ActivatedRoute) {
     addIcons({ chevronBackOutline, chevronForwardOutline });
 
     const today = new Date();
@@ -40,6 +41,16 @@ export class CalendarPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(): void {
+    const date = this.route.snapshot.queryParamMap.get('date');
+
+    if (date) {
+      this.selectedKey = date;
+      const temp = new Date(date);
+      this.currentMonth = new Date(temp.getFullYear(), temp.getMonth(), 1);
+    }
   }
 
 

@@ -8,6 +8,8 @@ import { NightRowComponent } from '../night-row/night-row.component';
 import { OvernightSleepData } from 'src/app/data/overnight-sleep-data';
 import { CheckInRowComponent } from '../check-in-row/check-in-row.component';
 import { StanfordSleepinessData } from 'src/app/data/stanford-sleepiness-data';
+import { Router } from '@angular/router';
+import { dateToISOKey } from 'src/app/data/sleep-time-utils';
 
 export type RecentLogTab = 'overnight' | 'daytime';
 
@@ -23,7 +25,7 @@ export class RecentLogsComponent  implements OnInit {
   @Input({ required: true }) averageValue!: string | null;
   @Input({ required: true }) selectedTab!: RecentLogTab;
   @Output() selectedTabChange = new EventEmitter<RecentLogTab>;
-  constructor(public sleepService:SleepService) {
+  constructor(public sleepService:SleepService, public router: Router) {
     addIcons({ moonOutline, sunnyOutline });
    }
 
@@ -37,11 +39,14 @@ export class RecentLogsComponent  implements OnInit {
     return this.sleepService.getLastNNights(7).filter((night): night is OvernightSleepData => night != null).reverse();
   }
 
+  private openCalendarDay(dateKey: string) {
+    this.router.navigate(['/tabs/calendar'], { queryParams: { date: dateKey } });
+  }
   onNightSelected(night: OvernightSleepData): void {
-    // Implement this later, should direct to calendar
+    this.openCalendarDay(night.wakeDateKey);
   }
 
   onCheckInSelected(checkIn: StanfordSleepinessData): void {
-
+    this.openCalendarDay((dateToISOKey(checkIn.loggedAt)));
   }
 }
