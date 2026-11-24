@@ -1,4 +1,5 @@
 --Readme document for Nathan Nguyen, nathahn9@uci.edu, NATHAHN9--
+https://youtu.be/KYCpIKrLf-A?si=ERjs_Ab3l-yTEpK7
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
