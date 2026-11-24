@@ -2,13 +2,13 @@
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
-10/10
+11/10
 - 1/1 The ability to log overnight sleep
 - 1/1 The ability to log sleepiness during the day
 - 1/1 The ability to view these two categories of logged data
 - 2/2 Either using a native device resource or backing up logged data
 - 2/2 Following good principles of mobile design
-- 2/2 Creating a compelling app
+- 3/2 Creating a compelling app
 - 1/1 A readme and demo video which explains how these features were implemented and their design rationale
 
 2. How long, in hours, did it take you to complete this assignment?
@@ -23,6 +23,10 @@
     - Spent time working on the rest of the Home Page UI component. Implemented the action buttons (still need to work on functionality), implemented the recent logs segment switches to display overnight sleep data and daytime sleepiness check ins, currently left off on creating modal menu screens to log data.
 - Saturday (11/21/2026): ~6 hours
     - Spent time working on implementing the modal popups to log sleep and sleepiness checkins. Also worked on tab bar navigation to calendar page, and routing from recent log cards directly to calendar date.
+- Sunday (11/22/2026): ~4 hours
+    - Tried to do the extra credit by implementing native device resource, but was running into trouble and decided to scrap it
+- Monday (11/23/2026): ~1 hour
+    - Worked on readme and demo recording
 
 3. What online resources did you consult when completing this assignment? (list specific URLs)
 - General:
@@ -59,14 +63,14 @@
 
 
 5. Is there anything special we need to know in order to run your code?
-- I did install a couple packages (don't remember what exactly), but I committed the package.json and package-lock.json so a simple npm install should be good to run it. ALSO, I designed this app specifically for iOS iPhone 16, so when running this in the browser set dimensions to that.
+- I did install a couple packages (don't remember what exactly), but I committed the package.json and package-lock.json so a simple npm install and ionic serve should be good to run it. ALSO, I designed this app specifically for iOS iPhone 16, so when running this in the browser set dimensions to that or it'll look bad.
 
 
 --Aim for no more than two sentences for each of the following questions.--
 
 
 6. Did you design your app with a particular type of user in mind? If so, whom?
-- No, I designed it to be appealing to a wide user base, not targeted towards a specific group. However I did design it specifically for iPhone 16 dimensions
+- No, I designed it to be appealing to a wide user base, not targeted towards a specific group. However, I did design it specifically for iPhone 16 dimensions.
 
 
 7. Did you design your app specifically for iOS or Android, or both?
@@ -86,18 +90,18 @@
 
 
 11. Which feature choose--using a native device resource, backing up logged data, or both?
-- The feature I chose to implement was backing up logged data using ionic storage and following the documentation and video provided in the assignment description
+- The feature I chose to implement was backing up logged data using ionic storage and following the documentation and video provided in the assignment description.
 
 
 12. If you used a native device resource, what feature did you add? How does this feature change the app's experience for a user?
-- N/A
+- N/A, I didn't use any native device resources (though I did try to add notifications) and opted for backing up logged data instead.
 
 
 13. If you backed up logged data, where does it back up to?
-- My logged data is backed up and stored in an IndexedDB that lives within the browser allowing to survive refreshes and restarts.
+- My logged data is backed up and stored in an IndexedDB that lives within the browser allowing it to survive refreshes and restarts.
 
 14. How does your app implement or follow principles of good mobile design?
 - It has a useful initial view allowing users to see relevant information and log sleep/sleepiness directly from the home page.
-- I have "uh-oh" buttons implemented on several components like when logging data or navigating to pages, these buttons cancel entries, navigate back to the previous page, etc.
-- Error prevention is implemented such that the sleep end time must be after the sleep start time, not possible to sleep back in time
+- I have "uh-oh" buttons implemented on several components like when logging data or navigating to pages, these buttons cancel entries, navigate back to the previous page, allow entries to be relogged, etc.
+- Error prevention is implemented such that the sleep end time must be after the sleep start time, not possible to sleep back in time. I also have the calendar set up to where you can only view dates in the past and present, not the future
 - Follows iOS platform conventions by prioritizing content over UI, using the whole height and width of the screen for the interface, using simple colors, using borderless buttons and widgets, AND taking into account features on the screen like the floating island at the top (I lowered the header to make room for it) and the home bar at the bottom (I raised the navigation island to make room for it)
